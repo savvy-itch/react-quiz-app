@@ -2,6 +2,7 @@
   display: flex;
   height: 100%;
   align-items: center;
+  justify-content: space-around;
   font-size: 1.2rem;
 }
 /* Reference - https://www.w3schools.com/howto/howto_css_switch.asp */

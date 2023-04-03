@@ -14,7 +14,7 @@ export default function Results({ questions, setCurrentQuestion }) {
     <div className="modal modal-sheet position-static d-block py-md-5">
       <div className="modal-dialog modal-lg modal-fullscreen-sm-down">
         <div className="modal-content rounded-4 shadow p-3 align-items-center">
-          <h1 className="fs-3 mb-5">Congratulations! You've completed the quiz.</h1>
+          <h1 className="fs-3 mb-5 text-center">Congratulations! You've completed the quiz.</h1>
           <h2>Your result: {questions.length - failedQuestions.length} out of {questions.length}</h2>
           {/* If some questions were failed, display them */}
           {failedQuestions && (

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import QuizSettingsForm from "./components/QuizSettingsForm";
 import Question from "./components/Question";
+import ThemeToggle from "./components/ThemeToggle";
 import QuizContext from "./context";
 
 function App() {
@@ -20,13 +21,13 @@ function App() {
 
   return (
     <div className="App">
+      <ThemeToggle />
+      {/* if user clicked Start Quiz button */}
       {quizBegan ? (
-        <QuizContext.Provider value={{ failedQuestions }}>
+        <QuizContext.Provider value={{ failedQuestions, setQuizBegan, setFailedQuestions }}>
           <Question 
             questions={questions}
-            handleAnswer={handleAnswer} 
-            setQuizBegan={setQuizBegan}
-            setFailedQuestions={setFailedQuestions}
+            handleAnswer={handleAnswer}
           />
         </QuizContext.Provider>
       ) : (

@@ -1,44 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Loading from "./Loading";
-import QuizContext from "../context";
+import Results from "./Results";
 
-export default function Question({ questions, handleAnswer, setQuizBegan, setFailedQuestions }) {
+export default function Question({ questions, handleAnswer }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const { failedQuestions } = useContext(QuizContext);
 
   if (!questions || questions.length === 0) {
     return <Loading />;
   }
 
-  function handleResetQuiz() {
-    setQuizBegan(false);
-    setCurrentQuestion(0);
-    setFailedQuestions([]);
-  }
-
   // If no more questions left, display results
   if (currentQuestion > questions.length - 1) {
     return (
-      <div className="modal modal-sheet position-static d-block p-4 py-md-5">
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content rounded-4 shadow p-3 align-items-center">
-            <h1 className="fs-3 mb-5">Congratulations! You've completed the quiz.</h1>
-            <h2>Your result: {questions.length - failedQuestions.length} out of {questions.length}</h2>
-            {failedQuestions && (
-              <ul className="list-group w-100 mt-4">
-                {failedQuestions.map((fq) => (
-                  <li key={fq.questionId} className="list-group-item">
-                    <p className="fs-5">{questions.find(q => q.id === fq.questionId).question}</p>
-                    <p className="text-danger"> Your answer: {fq.selectedAnswer}</p>
-                    <p className="text-success">Correct answer: {fq.correctAnswer}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <button className="btn btn-lg btn-primary mt-4" onClick={handleResetQuiz}>Try Again</button>
-          </div>
-        </div>
-      </div>
+      <Results
+        questions={questions}
+        setCurrentQuestion={setCurrentQuestion}
+      />
     )
   }
 
@@ -52,6 +29,7 @@ export default function Question({ questions, handleAnswer, setQuizBegan, setFai
   allAnswers.splice(getRandomIndex(), 0, questions[currentQuestion].correctAnswer);
 
   function handleAnswerClick(e) {
+    // if user skips the question
     if (e.target.id === 'next-question-btn') {
       handleAnswer(questions[currentQuestion].id, '', questions[currentQuestion].correctAnswer);
     } else {
@@ -61,8 +39,8 @@ export default function Question({ questions, handleAnswer, setQuizBegan, setFai
   }
 
   return (
-    <div className="modal modal-sheet position-static d-block p-4 py-md-5">
-      <div className="modal-dialog modal-lg">
+    <div className="modal modal-sheet position-static d-block py-md-5">
+      <div className="modal-dialog modal-lg modal-fullscreen-sm-down">
         <div className="modal-content rounded-4 shadow p-3 align-items-center">
           <p className="align-self-end fw-semibold text-primary-emphasis">Question 
             <span> {currentQuestion + 1}</span>/
